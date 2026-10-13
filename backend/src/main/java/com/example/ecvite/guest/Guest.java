@@ -1,5 +1,7 @@
 package com.example.ecvite.guest;
 
+import com.example.ecvite.account.AppUser;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +15,10 @@ public class Guest {
     private Integer seats = 1;
     @Column(nullable = false) private String status = "PENDING";
     @Column(length = 2000) private String notes;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    @JsonIgnore
+    private AppUser owner;
 
     public Guest() {}
     public Long getId() { return id; }
@@ -29,4 +35,6 @@ public class Guest {
     public void setStatus(String status) { this.status = status; }
     public String getNotes() { return notes; }
     public void setNotes(String notes) { this.notes = notes; }
+    public AppUser getOwner() { return owner; }
+    public void setOwner(AppUser owner) { this.owner = owner; }
 }

@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.104.2",
     "@vitejs/plugin-react": "latest",
     "ag-grid-community": "^36.2.0",
     "ag-grid-react": "^36.2.0",
