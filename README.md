@@ -1,4 +1,4 @@
-# 📊 Table Editing Evaluation Playground (eCvite-inspired)
+# 📊 Table Editing Evaluation Playground 
 
 פרויקט זה משמש כסביבת בדיקה, מחקר והערכה (**Playground**) לבחינת היכולות והביצועים של ספריות שונות לעריכה טבלאית מתקדמת בעולם ה-Web. 
 
