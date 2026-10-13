@@ -1,60 +1,47 @@
-# eCvite-inspired — Guest & Event Manager (Neon PostgreSQL)
+# 📊 Table Editing Evaluation Playground (eCvite-inspired)
 
-A starter application inspired by eCvite's guest-table workflow, using **React + Vite**, **Java 21 + Spring Boot**, **Spring Data JPA**, and **Neon PostgreSQL**.
+פרויקט זה משמש כסביבת בדיקה, מחקר והערכה (**Playground**) לבחינת היכולות והביצועים של ספריות שונות לעריכה טבלאית מתקדמת בעולם ה-Web. 
 
-## Requirements
-- Java 21+
-- Maven 3.9+
-- Node.js 20+
-- A Neon account and PostgreSQL database
+המימוש הנוכחי מתמקד בבחינת ספריית **AG Grid (Community)** ומציג יישום מלא של טבלה דינמית, הניתנת לעריכה ישירה (In-line Editing) עם שמירה אוטומטית (Autosave) מול שרת מרוחק, תוך התחשבות בממשק עשיר, רספונסיבי ותומך עברית מלאה (RTL).
 
-## 1. Create/connect your Neon database
-1. Create a project at https://neon.tech/ (or open your existing project).
-2. In the Neon dashboard, open **Connect** and select your database and branch.
-3. Copy the host, database name, username, and password from the connection details.
-4. Build a JDBC URL in this format:
-   `jdbc:postgresql://YOUR-HOST.neon.tech/YOUR_DATABASE?sslmode=require`
-   Replace the host and database with the actual values from Neon. Do not include angle brackets.
+---
 
-## 2. Configure environment variables (Windows PowerShell)
-Open PowerShell in the `backend` directory and set the values for the current terminal session:
+## 🛠️ Stack & Technologies
 
-```powershell
-$env:DB_URL="jdbc:postgresql://YOUR-HOST.neon.tech/neondb?sslmode=require"
-$env:DB_USERNAME="YOUR_NEON_USERNAME"
-$env:DB_PASSWORD="YOUR_NEON_PASSWORD"
-```
+### Frontend
+- **React 18 & Vite** — סביבת הפיתוח וההרצה (באמצעות `createRoot` המודרני).
+- **AG Grid Community (^36.2.0)** — הספרייה הנבחרת לניהול, סינון ועריכת הטבלה.
+- **Lucide React** — חבילת האייקונים הוקטוריים המלווה את הממשק.
+- **CSS3 with Heebo Font** — עיצוב נייטיב מותאם אישית מבוסס פונט Heebo מבית Google.
 
-Replace all example values with the credentials shown in Neon. Keep the password private and never commit it to Git. `backend/.env.example` is only a template; Spring Boot does not automatically load that file.
+### Backend & Database
+- **Java 21 & Spring Boot** — שרת ה-REST API המרכזי.
+- **Spring Data JPA & Hibernate** — שכבת הגישה לנתונים ועדכון אוטומטי של הסכמה (ddl-auto).
+- **Neon PostgreSQL** — בסיס הנתונים המנוהל בענן (חיבור מאובטח באמצעות SSL).
 
-## 3. Run the backend
-In the same PowerShell window, from `backend`:
+---
 
-```powershell
-mvn spring-boot:run
-```
+## 🌟 Tested Table & UI Features
 
-API: `http://localhost:8080/api/guests`
+במסגרת הפרויקט נבחנו והוטמעו היכולות הטכנולוגיות הבאות:
 
-## 4. Run the frontend
-Open a second terminal in `frontend`:
+### 1. יכולות עריכה וניהול נתונים (AG Grid Showcase)
+- **In-line Cell Editing:** אפשרות לעריכה ישירה ואינטואיטיבית של תאים (שמות, טלפונים והערות).
+- **Custom Cell Editors:** שימוש ברכיבי עריכה מובנים כמו `agNumberCellEditor` להגבלת קלט מספרי (מקומות ישיבה) ו-`agSelectCellEditor` לבחירת סטטוס מתוך רשימה סגורה.
+- **Data Parsing & Validation:** סינון וניקוי קלט בזמן אמת (לדוגמה: מניעת ערכים קטנים מ-1 בשדה המקומות).
+- **Autosave Integration:** האזנה לאירוע `onCellValueChanged` ושליחת פקודת `PUT` ישירות לשרת לשמירה חלקה ללא צורך בכפתור "שמור" ייעודי בטבלה.
 
-```powershell
-npm install
-npm run dev
-```
+### 2. ממשק משתמש וחוויית שימוש (UI/UX & Styling)
+- **Full RTL Support:** הטמעת כיווניות מימין לשמאל (`dir="rtl"` ו-`enableRtl={true}`) המותאמת לעברית באופן טבעי עבור הטבלה, פאנל הניהול והטפסים.
+- **Responsive Layout:** התאמה מלאה של חלוקת המסך (Sidebar מול האזור המרכזי, כרטיסי הסטטיסטיקה והטבלה) למסכי מחשב, טאבלטים ומובייל באמצעות `media queries` מתקדמים.
+- **State Management & Dashboards:** תצוגת מונים דינמית (Dashboard) בזמן אמת המחשבת את סך המוזמנים, כמות המקומות המאושרים, ממתינים ולא מגיעים על סמך מצב הטבלה.
+- **Print Optimization:** הטמעת סגנונות הדפסה ייעודיים (`@media print`) המעלימים אלמנטים מיותרים מהממשק (כמו סרגל צד וכפתורי פעולה) ומכינים את הטבלה להדפסה נקייה או לשמירה כ-PDF.
 
-Open the URL printed by Vite (usually `http://localhost:5173`).
+---
 
-## Included
-- Hebrew RTL interface
-- Guest table with search and RSVP filter
-- Add, edit, and delete guests
-- Autosave edits through the Java REST API
-- Print-friendly guest list
-- Neon PostgreSQL storage (no local H2 database)
+## 📂 Project Structure (Frontend Highlights)
 
-## Notes
-- The backend connects to Neon over SSL using `sslmode=require`.
-- Hibernate uses `ddl-auto=update` to create/update the entity schema automatically. For production, prefer managed database migrations such as Flyway and review schema changes before deploying.
-- This is a starter implementation, not a copy of eCvite's source code. Event-level management, authentication, import/export and version history can be added next.
+החלק הקדמי של הפרויקט בנוי בצורה נקייה ומודולרית:
+* **`main.jsx`**: נקודת הכניסה המאתחלת את האפליקציה בתוך `React.StrictMode` ומייבאת את קובץ העיצוב הראשי.
+* **`App.jsx`**: הרכיב המרכזי שמנהל את ה-State, החיבור ל-API, הלוגיקה של AG Grid, סינוני החיפוש, וכן את מודל (Modal) הוספת/עריכת המוזמן.
+* **`styles.css`**: ארכיטקטורת הסטיילינג של האפליקציה הכוללת משתני CSS, עיצוב לוח הבקרה, הגדרות ה-Sidebar, מחלקות צבעים דינמיות לסטטוסים וחוקי הדפסה ורספונסיביות.
